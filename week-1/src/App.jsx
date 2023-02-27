@@ -599,3 +599,61 @@ function App() {
 export default App
 
  */
+
+
+
+
+
+
+// 16강 실습 - 카운터 앱
+/* 
+import React from 'react'
+import { useState } from 'react';
+
+function App() {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <div>
+        {count}
+      </div>
+      <button onClick={() => {
+        setCount(count - 1)
+      }}>-1</button>
+      <button onClick={() => {
+        setCount(count + 1)
+      }}>+1</button>
+    </div>
+  )
+}
+
+export default App
+ */
+
+
+
+import React from 'react'
+import { useState } from 'react'
+
+function App() {
+  const [count, setCount] = useState(0)
+  const plusButtonClickHandler = () => {
+    const newPlusCount = count +1;
+    setCount(newPlusCount);
+  }
+
+  return (
+    <div>
+      <div>
+        {count}
+      </div>
+      <button onClick={() => {
+        const newCount = count -1
+        setCount(newCount)
+      }}>-1</button>
+      <button onClick={plusButtonClickHandler}>+1</button>
+    </div>
+  )
+}
+
+export default App
