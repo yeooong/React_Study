@@ -33,26 +33,24 @@ function App() {
   const deleteTodoList = (id) => {
     setTodoList(todoList.filter((todo) => todo.id !== id));
   }
+  console.log('outTodoList', todoList)
+  console.log('typeof', typeof Object.keys(todoList))
 
   const isDoneChangeHandler = (id) => {
 
-    console.log('todoList', todoList)
+    console.log('todoList', todoList, typeof todoList)
 
-    const filteredTodo = todoList.filter((todo) => todo.id === id);
+    const filteredTodo = Object.values(todoList).filter((todo) => todo.id === id);
 
     console.log('필터링',filteredTodo, typeof filteredTodo);
     console.log('필터링1',filteredTodo[0].isDone);
 
     filteredTodo[0].isDone = !filteredTodo[0].isDone
-
     console.log('필터링2',filteredTodo[0].isDone);
     
-    setTodoList((prev) => {return {...prev, filteredTodo}});
-
-
+    setTodoList((todoList) => {return {...filteredTodo, todoList}});
     console.log('변경된todoList', todoList);
   }
-
 
   return (
     <div className='layout'>
