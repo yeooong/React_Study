@@ -18,24 +18,42 @@ function App() {
     const { name, value } = event.target
 
     setTodo((prev) => {
-      return {...prev, [name]: value, id: todoList.length +1}
+      return { ...prev, [name]: value, id: todoList.length + 1 }
     })
   }
 
   const addTodoList = (event) => {
     event.preventDefault();
 
-    setTodoList((prev) => {return [...prev, todo]});
-    setTodo(todo);
+    setTodoList((prev) => { return [...prev, todo] });
+    setTodo(newTodoList);
   };
 
 
   const deleteTodoList = (id) => {
-    setTodoList(todoList.filter( (todo) => todo.id !== id));
+    setTodoList(todoList.filter((todo) => todo.id !== id));
   }
 
-  
-  
+  const isDoneChangeHandler = (id) => {
+
+    console.log('todoList', todoList)
+
+    const filteredTodo = todoList.filter((todo) => todo.id === id);
+
+    console.log('필터링',filteredTodo, typeof filteredTodo);
+    console.log('필터링1',filteredTodo[0].isDone);
+
+    filteredTodo[0].isDone = !filteredTodo[0].isDone
+
+    console.log('필터링2',filteredTodo[0].isDone);
+    
+    setTodoList((prev) => {return {...prev, filteredTodo}});
+
+
+    console.log('변경된todoList', todoList);
+  }
+
+
   return (
     <div className='layout'>
       <header className='title-board'>
@@ -52,48 +70,73 @@ function App() {
         <button>추가</button>
       </form>
 
-      <div className='list-board'>
-        <h2>Working..❤️‍🔥</h2>
-
-        {
-          todoList.map((todoList, id) => {
-            const { title, content, isDone } = todoList
-            console.log(todoList.id);
-            return (
-
-              <div key={`todoList_box${id}`} className='list-box'>
-                <div className='todo-box'>
+      <section >
+        <article className='list-board'>
+          <h2>Working...❤️‍🔥</h2>
+          {
+            todoList.filter(todoList => todoList.isDone===false).map((todoList, id) => {
+              const { title, content} = todoList
+              console.log(todoList.id);
+              return (
+                (<div key={`todoList_box${id}`} className='list-box'>
                   <h2 className='todo-title'>
                     {title}
                   </h2>
-                </div>
 
-                <div className='todo-content'>
-                  {content}
-                </div>
+                  <h5 className='todo-content'>
+                    {content}
+                  </h5>
 
-                {
-                  ({ isDone })
-                    ? <div className='list-buttons'>
-                      <button onClick={() => deleteTodoList(todoList.id)}
-                        className='todo-delete-button'>삭제하기</button>
-                      <button className='todo-done-button'>취소</button>
-                    </div>
-                    : <div className='list-buttons'>
-                      <button onClick={() => deleteTodoList(todoList.id)}
-                        className='todo-delete-button'>삭제하기</button>
-                      <button className='todo-done-button'>완료</button>
-                    </div>
-                }
+                  <div className='list-buttons'>
+                    <button onClick={() => deleteTodoList(todoList.id)}
+                      className='todo-delete-button'>삭제하기</button>
+                    <button
+                      className='todo-done-button'
+                      onClick={() => isDoneChangeHandler(todoList.id)}
+                    >
+                      '완료'
+                    </button>
+                  </div>
 
-              </div>
-            )
-          })
-        }
+                </div>)
+              )
+            })
+          }
+        </article>
 
-        <h2>Done..!💖</h2>
+        <article className='list-board'>
+          <h2>Done...💖</h2>
+          {
+            todoList.filter(todoList=> todoList.isDone===true).map((todoList, id) => {
+              const { title, content} = todoList
+              console.log(todoList.id);
+              return (
+                (<div key={`todoList_box${id}`} className='list-box'>
+                  <h2 className='todo-title'>
+                    {title}
+                  </h2>
 
-      </div>
+                  <h5 className='todo-content'>
+                    {content}
+                  </h5>
+                  <div className='list-buttons'>
+                    <button onClick={() => deleteTodoList(todoList.id)}
+                      className='todo-delete-button'>삭제하기</button>
+                    <button
+                      className='todo-done-button'
+                      onClick={() => isDoneChangeHandler(todoList.id)}
+                    >
+                      '취소'
+                    </button>
+                  </div>
+                </div>)
+              )
+            })
+          }
+
+        </article>
+
+      </section>
 
     </div>
   );

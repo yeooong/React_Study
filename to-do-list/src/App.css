@@ -71,6 +71,10 @@
 
 .list-board {
   padding: 0 20px;
+
+  align-items: center;
+  justify-content: center;
+
 }
 
 .list-box {
@@ -83,10 +87,6 @@
 
   margin-top: 20px;
 }
-/* 의미를 잘 모르겠음 */
-.todo-box {
-  display: block;
-}
 
 .todo-title {
   display: block;
@@ -97,11 +97,6 @@
   margin-block-end: 0.8em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-}
-
-/* 의미를 잘 모르겠음 */
-.todo-content {
-  display: block;
 }
 
 .list-buttons {
