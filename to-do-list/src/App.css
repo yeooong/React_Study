@@ -5,7 +5,7 @@
   background-color: rgb(253, 244, 244);
 }
 
-.title-square {
+.title-board {
   background-color: rgb(255, 241, 223);
   
   height: 50px;
@@ -20,12 +20,13 @@
 
 }
 
-.input-square {
-  background-color: burlywood;
+.input-board {
+  background-color: lightblue;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 20px;
   
   border-radius: 10px;
   
@@ -46,7 +47,7 @@
   border: none;
   
   height: 40px;
-  width: 300px;
+  width: 250px;
 
   padding: 0 10px;
 }
@@ -68,7 +69,65 @@
   font-weight: 600;
 }
 
+.list-board {
+  padding: 0 20px;
+}
+
 .list-box {
   background-color: azure;
+  width: 300px;
   padding: 0 20px;
+
+  border: 2px solid pink;
+  border-radius: 10px;
+
+  margin-top: 20px;
+}
+/* 의미를 잘 모르겠음 */
+.todo-box {
+  display: block;
+}
+
+.todo-title {
+  display: block;
+  font-size: 1.5em;
+  font-weight: bold;
+
+  margin-block-start: 0.8em;
+  margin-block-end: 0.8em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+/* 의미를 잘 모르겠음 */
+.todo-content {
+  display: block;
+}
+
+.list-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 10px;
+}
+
+.todo-delete-button {
+  height: 40px;
+  width: 50%;
+
+  border-radius: 10px;
+  cursor: pointer;
+
+  background-color: white;
+  border: 2px solid red;
+}
+
+.todo-done-button {
+  height: 40px;
+  width: 50%;
+
+  border-radius: 10px;
+  cursor: pointer;
+
+  background-color: white;
+  border: 2px solid green;
 }
