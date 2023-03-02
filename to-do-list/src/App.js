@@ -48,13 +48,15 @@ function App() {
         <div>React</div>
       </header>
 
-      <form onSubmit={addTodoList}>
-        <label>제목</label>
-        <input name='title' onChange={onChangeHandler} />
-        <label>내용</label>
-        <input name='content' onChange={onChangeHandler} />
+      <form className='input-board' onSubmit={addTodoList}>
+        <div className='input-box'>
+          <label className='input-label'>제목</label>
+          <input className='input' name='title' onChange={onChangeHandler} />
+          <label className='input-label'>내용</label>
+          <input className='input' name='content' onChange={onChangeHandler} />
+        </div>
 
-        <button>추가</button>
+        <button className='input-button'>추가</button>
       </form>
 
       <section >
@@ -63,7 +65,6 @@ function App() {
           {
             todoList.filter(todoList => todoList.isDone===false).map((todoList, id) => {
               const { title, content} = todoList
-              console.log(todoList.id);
               return (
                 (<div key={`todoList_box${id}`} className='list-box'>
                   <h2 className='todo-title'>
@@ -96,7 +97,6 @@ function App() {
           {
             todoList.filter(todoList=> todoList.isDone===true).map((todoList, id) => {
               const { title, content} = todoList
-              console.log(todoList.id);
               return (
                 (<div key={`todoList_box${id}`} className='list-box'>
                   <h2 className='todo-title'>
