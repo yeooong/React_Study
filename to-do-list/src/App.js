@@ -26,14 +26,13 @@ function App() {
     event.preventDefault();
 
     setTodoList((prev) => {return [...prev, todo]});
-    setTodo(newTodoList);
+    setTodo(todo);
   };
 
 
   const deleteTodoList = (id) => {
-    const filteringList = (todoList) => {todoList.filter((todo) => todo.id !== id)};
-    setTodoList(filteringList);
-  };
+    setTodoList(todoList.filter( (todo) => todo.id !== id));
+  }
 
   
   
@@ -55,7 +54,6 @@ function App() {
 
       <div className='list-board'>
         <h2>Working..❤️‍🔥</h2>
-        <h2>Done..!💖</h2>
 
         {
           todoList.map((todoList, id) => {
@@ -63,7 +61,6 @@ function App() {
             console.log(todoList.id);
             return (
 
-              
               <div key={`todoList_box${id}`} className='list-box'>
                 <div className='todo-box'>
                   <h2 className='todo-title'>
@@ -76,27 +73,25 @@ function App() {
                 </div>
 
                 {
-                  ({isDone})
+                  ({ isDone })
                     ? <div className='list-buttons'>
-                      <button onClick={()=>deleteTodoList(todoList.id)} 
-                      className='todo-delete-button'>삭제하기</button>
+                      <button onClick={() => deleteTodoList(todoList.id)}
+                        className='todo-delete-button'>삭제하기</button>
                       <button className='todo-done-button'>취소</button>
                     </div>
                     : <div className='list-buttons'>
-                      <button onClick={()=>deleteTodoList(todoList.id)} 
-                      className='todo-delete-button'>삭제하기</button>
+                      <button onClick={() => deleteTodoList(todoList.id)}
+                        className='todo-delete-button'>삭제하기</button>
                       <button className='todo-done-button'>완료</button>
                     </div>
                 }
-
-                
-
-
 
               </div>
             )
           })
         }
+
+        <h2>Done..!💖</h2>
 
       </div>
 
