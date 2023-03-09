@@ -38,6 +38,8 @@ function App() {
     const newTodo = todoList.map((todo)=> todo.id === id?
     {...todo,isDone: !todo.isDone} : todo
     );
+    // 삼항연산자 부분 아래와 같다고 함!
+    // todo.id === id && {...todo, isDone: !todo.isDone}
     setTodoList(newTodo);
   }
 
