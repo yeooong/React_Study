@@ -46,7 +46,7 @@ function TodoForm() {
 export default TodoForm;
 
 const StNav = styled.nav`
-    border: 1.5px dotted #2F4F4F;
+    border: 1.5px solid #2F4F4F;
     width: 800px;
     height: 150px;
     display: flex;
@@ -56,8 +56,6 @@ const StNav = styled.nav`
 `
 const StForm = styled.form`
     padding: 10px;
-    border: 1px solid #FF7F50;
-    border-radius: 10px;
 `
 
 const StAddBtn = styled.button`

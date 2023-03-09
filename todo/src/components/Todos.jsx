@@ -61,9 +61,6 @@ const StTodoList = styled.div`
     padding: 20px;
 `
 const StTodoListTodo = styled.div`
-    width: 150px;
-    height: 150px;
-    border: 1px solid #FF7F50;
     border-radius: 5px;
     display: flex;
     align-items: center;

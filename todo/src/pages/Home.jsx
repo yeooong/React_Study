@@ -25,13 +25,10 @@ export default Home;
 const StLayout = styled.div`
     background-color: #FFFAF0;
     width: 800px;
-    height: 800px;
+    height: 1200px;
 `
 
 const StSection = styled.section`
-    width: 800px;
-    height: 650px;
-    border: 1.5px dotted #2F4F4F;
     padding: 20px;
     display: flex;
     flex-direction: column;
