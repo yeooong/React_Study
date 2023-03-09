@@ -1,0 +1,341 @@
+12강 Rudux 소개
+
+1. 리덕스가 필요한 이유 (Redux = 상태관리 라이브러리 = 중앙 State(Data) 관리소)
+    (1) useState의 불편함 > prop drilling
+    (2) context API의 경우에도 provider가 가진 state가 하나라도 변경되면 하위 컴포넌트 전체가 re-rendering된다. 
+
+
+2. 리덕스란 무엇인가?
+    (1) 중앙 state 관리소를 사용할 수 있게 도와주는 패키지(라이브러리 / 3rd party의 일종)
+    (2) 직접구현하기 어려우므로 패키지의 도움을 받아 구현
+    (3) 전역 상태관리 라이브러리라고도 한다. 즉 Global sate를 관리하게 도와주는 라이브러리.
+
+
+3. Global state와 Local state
+    (1) 전역상태(Global state) = 중앙 state관리소. 어디서든 접근 가능. 컴포넌트가 아닌 중앙화된 특별한 곳에서 생성
+    (2) 지역상태(Local state) = 컴포넌트에서 useState를 통해 생성한 state.
+
+------------------------------------------------------------------------------------------------
+13강 리덕스 설정
+
+1. 리덕스 설정
+    (1) 2개의 패키지 설치
+        yarn add redux react-redux >> redux / react-redux 두가지 패키지 동시 설치
+    (2) 폴더구조 생성하기
+        src -redux폴더 : 리덕스 관련 코드를 모두 몰아넣음
+                    -config폴더 : 리덕스 설정 관련 파일 전부
+                                -configStore.js : 중앙 state 관리소
+                    -modules폴더 : state의 그룹! (예: Todolist의 todos.js같은 파일 등)
+    
+
+2. 설정 코드 작성
+
+    (1) src/configStore.js
+        import { createStore } from "redux";
+        import { combineReducers } from "redux";
+
+        const rootReducer = combineReducers({modules폴더에 있는 state들을 몰아넣을 것}); 
+            >> combineReducers()
+                리덕스는 action —> dispatch —> reducer 순으로 동작.
+                이때 애플리케이션이 복잡해지게 되면 reducer를 여러 개로 나눠야 함.
+                combineReducers은 여러 개의 독립적인 reducer의 반환 값을 하나의 상태 객체로 만들어 준다.
+            
+
+
+        const store = createStore(rootReducer); 
+            >> createStore()
+                리덕스의 가장 핵심이 되는 스토어를 만드는 메소드(함수)!
+                리덕스는 단일 스토어로 모든 상태 트리를 관리하므로, 
+                리덕스를 사용할 시 creatorStore는 단 한 번 호출.
+                rootReducer를 store로 반환해서 하나의 스토어를 생성!
+
+        export default store; 
+                >> store를 사용하기 위해 바깥으로 내보내기.
+
+    (2) index.js
+        // 원래부터 있던 코드
+        import React from "react";
+        import ReactDOM from "react-dom/client";
+        import App from "./App";
+        import reportWebVitals from "./reportWebVitals";
+
+        // 우리가 추가할 코드
+        import store from "./redux/config/configStore";
+            >> 참고로 export default로 내보낸 값은 store로 import하고
+            >> export로 내보낸 값은 {store}로 import 한다!
+        import { Provider } from "react-redux";
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(
+
+        //App을 Provider로 감싸주고, 
+        //configStore에서 export default 한 store를 넣어줍니다.
+        <Provider store={store}> 
+            <App />
+        </Provider>
+        );
+
+        // If you want to start measuring performance in your app, pass a function
+        // to log results (for example: reportWebVitals(console.log))
+        // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+        reportWebVitals();
+
+------------------------------------------------------------------------------------------------
+14강  Redux Couter(useSelector)
+1. modules(state의 그룹) 만들기
+
+    (1) modules폴더에 counter.js 파일 생성
+        // 초기 상태값(state)
+        // const [number, setNumber] = useState(0); 이전에는 초기값을 이렇게 줬던 것!
+        const initialState = {
+            number: 0
+        }
+
+
+        // 리듀서 : 'state'에 변화를 일으키는 함수! >> useState의 setNumber같은 함수구나.
+        // >> state를 action의 type에 따라 변경하는 함수.
+        // input: state와 action 두가지 값을 가진다.
+        // action: type/value를 가진 객체 형태. state를 어떻게 수정할 건지 그 action에 대해서 설명       
+        const counter = (state = initialState, action) => {
+            switch(action.type) {
+                default:
+                    return state;
+            }
+        }
+
+
+        // 모듈파일에서는 리듀서를 export default 한다.
+        export default counter;
+
+    (2) configStore.js 파일(state들)에서 counter module import하기
+        >> 즉 counter module을 스토어에 연결하는 과정
+        import { createStore } from "redux";
+        import { combineReducers } from "redux";
+
+        // modules폴더에서 import해오기
+        import counter from "../modules/counter";
+
+
+        // 객체형태(key:value)로 적어주기
+        const rootReducer = combineReducers({
+            //counter: counter, 와 같음
+            counter,
+        });
+        const store = createStore(rootReducer);
+
+        export default store;
+        //잊지말고 export 하자!
+
+
+    (3) 잘 연결했는지 App.js에서 useSelector로 확인하기
+        // 1. store에서 꺼낸 값을 할당 할 변수를 선언한다.
+        const number = 
+
+        // 2. useSelector()를 변수에 할당한다.
+        const number = useSelector() 
+
+        // 3. useSelector의 인자에 화살표 함수를 넣어준다.
+        const number = useSelector( ()=>{} )
+
+        // 4. 화살표 함수의 인자에서 값을 꺼내 return!
+        // state가 어떤 것인지 콘솔로 확인.
+        const number = useSelector((state) => {
+            console.log(state)
+            return state
+        });
+
+
+        // 실례로 알아보기!
+        import React from "react";
+        // useSelector를 import 한다.
+        import { useSelector } from "react-redux";
+
+        function App() {
+
+            // 여기에서 store에 접근해서, counter의 값을 읽어오고 싶다 => useSelector
+                            //여기서 state는 store에 들어있는 모든 state!
+            const data = useSelector((state)=> {
+                return state;
+            });
+
+            // data(Store=모든 state)가 어떻게 들어왔는지 조회해보기!
+            console.log("data ->', data)
+
+            // counter의 number값만 조회해보기
+            console.log("data ->", data.counter.number);
+
+            return <div>REDUX!</div>
+        };
+
+        export default App;
+
+
+
+
+
+------------------------------------------------------------------------------------------------
+15강  Redux Couter(useDispatch)
+
+1. 복습
+    -Store(중앙 상태 관리소)에는 (1)State와 그 state를 관리하는 (2)Reducer가 같이 들어있다!
+    >> 상세히 설명하자면,
+        configStore.js에서 Store를 만들 때 rootReducer를 만들었지.
+        그리고 rootReducer에는 modules폴더에 만들어놓은 모듈들(counter.js / users.js)이 들어가 있어!
+        근데 모듈들을 자세히 살펴보면, reducer를 만들어서 export해놨어! 
+        
+        counter.js 파일을 예로들자면
+        const counter = (state = initialState, action) => {switch~~~} 이런식으로
+        reducer를 만들었지! (참고로 switch문을 통해 state를 제어할 수 있어)
+    
+    -그래서 rootReducer = combineFeducers({counter,}) 이렇게 counter를 넣어놓은 건 결국!
+        >> reducer를 넣어놨다는 것이고,
+        Store에는 state와 reducer가 같이 있다고 할 수 있지!
+
+2. 리덕스 흐름
+    -용어정리
+        -Action: State가 변하는것. “무엇이 일어날지”
+        -Reducer: 변화를 일으키는, 즉 데이터(state)를 수정하는 함수. action을 통해 어떠한 행동을 정의했다면, 그 결과 어플리케이션의 상태가 어떻게 바뀌는지는 특정하게 되는 함수이다.
+        -Store: action과 action에 따라 상태를 수정하는 reducer를 저장하는 어플리케이션에 있는 단 하나의 객체. 스토어는 State 를 수시로 확인해 View 한테 변경된 사항을 알려주는 역할을 한다.
+        -Dispatch: 스토어의 내장 함수 중 하나로 리듀서에게 Action을 발생하라고 시키는 것. store에서 reducer함수를 실행시켜 state를 업데이트한다.
+        -Subscribe: 액션이 디스패치 될 때 마다 전달해준 함수를 호출한다.
+        -Middleware: 액션을 디스패치 했을때 리듀서에서 이를 처리하기에 앞서 사전에 지정된 작업들을 실행한다.
+        -thunk 와 saga 가 대표.
+
+    (1) UI(component)에서 event가 일어난다.
+    (2) dispatch가 action(객체={type,Payload})을 Store로 보낸다(=dispatch의 의미)!
+    (3) Store에서 action(객체)의 type에 따라 reducer 함수를 실행한다.
+    (4) reducer의 실행결과 store에 새로운 값을 저장(=state를 변경)한다.
+    (5) store의 state에 subscribe 하고 있던 UI에 변경된 값을 준다.
+        
+
+
+
+------------------------------------------------------------------------------------------------
+16강  Redux Action Value creator
+
+1. action의 type을 reduce/dispatch안에 직접 넣는 것이 아니라 변수 형태로 관리해준다!
+    >> human error를 방지하기 위해.
+
+    -예시: counter.js 파일에서 변수 선언하고 export해주기!
+        // action value
+        // APP.js 등에서 쓸 수 있게 export해주기!
+        export const PLUS_ONE = "counter/PLUS_ONE";
+        export const MINUS_ONE = "counter/PLUS_ONE";
+    >> App.js와 counter.js 에서 아래와 같이 활용하기
+        <button onClick={()=> {
+            dispatch({
+            type: PLUS_ONE,       //type: 'PLUS_ONE' 대신!
+            });
+        }}
+2. action creater!
+    >> action value를 return하는 함수
+
+    -예시: counter.js에서 action creator만들고, app.js에서 사용하기.
+        // component에서 쓰기 위해서 export하기
+        export const plusOne = () => {
+            return {
+                type: PLUS_ONE,
+            }
+        }
+
+        // app.js에서 사용하는 예시! 함수니까 plusOne()!
+        <button onClick={()=> {
+            dispatch(plusOne());
+        }}
+        >
+
+------------------------------------------------------------------------------------------------
+17강  Redux Payload
+
+1. Payload란 무엇인가?
+    -Payload= 탑승한 승객, 탑재화물
+    
+2. Payload 활용
+    -action 객체라는 것은 action type을 payload만큼 처리하는 것이다!
+        예시: payload: 3 = 3만큼을 plus하겠다.
+    -action은 type과 payload 두가지 정보를 가진 객체!
+        따라서 payload를 활용하고 싶으면, action.payload라고 사용해야함.
+        reduce(state, action 두가지 값을 가짐)에서 payload값을 쓸 때도, action.payload!
+
+    -예시: input창에 들어오는 payload만큼 plus되는 counter 만들기!
+        // counter.js 에서
+        (1) counter ruducer에 넣어줄 변수와 함수
+            const PLUS_N = "counter/PLUS_N"
+        (2) App.js에서 쓸 plusN 함수는 export해주기 >> 이건 action용(?) 함수야!
+            export const plusN = (payload) => {
+                // 잘 들어오는지 확인(App.js파일에 import한 뒤에 확인)
+                // console.log('payload', payload);
+                return {
+                    type: PLUS_N,
+                    payload: payload,
+                };
+            }
+        (3) counter reducer에 case추가
+            case PLUS_N:
+            return {
+                number: state.number + action.payload
+            }
+        
+        //App.js 에서
+        (1) input 태그에 number로 state 만들어서
+            const [number, setNumber] = useState(0);
+        (2) 입력한 값 number로 받아오기
+            <input 
+            type='number' 
+            value={number}
+            onChange={(event) => {
+                //구조할당(?)연습!
+                // setNumber(+event.target.value) 와 같음.
+                const {value} = event.target;
+                setNumber(+value);
+            }}
+            />
+
+        (3) plusN 함수 import해오고
+            import { plusN } from "./redux/modules/counter";
+        (4) 버튼 누르면 dispatch로 number값을 담은 plusN함수 걸어서 reducer한테 보내기!
+            <button 
+            onClick={()=> {
+                dispatch(plusN(number));
+                // {number}가아니라 number여야함.
+                // {number}는 찍어보면 {number: '3'}
+                }}
+            >
+                +
+            </button>   
+
+        (5) 그러면 실제로는 함수를 거쳐서 이렇게 reducer로 보내지니까, 
+            dispatch(
+                {
+                    type: "counter/PLUS_N",
+                    payload: 3,
+                }
+            );
+            case PLUS_N(= "counter/PLUS_N") 경우로 처리돼서 return 된다.
+            즉 state.number + action.payload 된 값을 counter.number 안에 다시 집어넣는다.
+                
+                
+
+        
+
+------------------------------------------------------------------------------------------------
+18강  Redux Ducks Pattern
+
+1. 리덕스 모듈을 개발하는 방법이 각자 다르니
+    >> Erik Rasmussn의 redux 작성법 = Ducks패턴 제안
+    https://github.com/erikras/ducks-modular-redux
+
+2. Ducks패턴
+    >> 아래 패턴을 지켜서 module을 만든다!
+    (1) Reducer 함수를 export default한다.
+    (2) Action creator 함수들을 export한다.
+    (3) Action type은 app/reducer/ACTION_TYPE형태로 작성한다.
+
+
+
+
+------------------------------------------------------------------------------------------------
+19강  Redux Router Dom(1)
+
+------------------------------------------------------------------------------------------------
+20강  Redux Router Dom(2)

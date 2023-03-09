@@ -1,0 +1,30 @@
+.todo-wrapper {
+  padding: 10px;
+
+}
+
+.todo-wrapper_form {
+}
+
+.todo-wrapper_cards {
+  display: flex;
+  /* 카드가 특정 영역을 먹으면 다음 줄로 내려가게 */
+  flex-wrap: wrap;
+  /* 카드사이에 간격주기 */
+  gap: 20px;
+}
+
+.todo-wrapper_cards_card {
+  border: 1px solid orange;
+  height: 150px;
+  width: 200px;
+
+  /* 내부 속성을(자식들) 어디로든 보낼 수 있는 영역(flex영역)을 만들어줘 */
+  display: flex;
+  /* 가로축을 가지고 중간으로 */
+  justify-content: center;
+  /* 세로축을 가지고 중간으로 */
+  align-items: center;
+
+  border-radius: 15px;
+}
