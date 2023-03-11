@@ -28,7 +28,7 @@ function App() {
     const { data } = await api.get(
       "/todos"
     );
-    console.log("data", data);
+    // console.log("data", data);
     setTodos(data);
   }
 
