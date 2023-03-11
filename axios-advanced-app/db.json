@@ -1,16 +1,24 @@
 {
-    "todos": [
-        {
-            "id": 1,
-            "title": "react"
-        },
-        {
-            "id": 2,
-            "title": "node"
-        },
-        {
-            "id": 3,
-            "title": "spring"
-        }
-    ]
+  "todos": [
+    {
+      "id": 1,
+      "title": "react"
+    },
+    {
+      "id": 3,
+      "title": "test"
+    },
+    {
+      "title": "new Todo2",
+      "id": 4
+    },
+    {
+      "title": "hi",
+      "id": 5
+    },
+    {
+      "title": "테스트",
+      "id": 6
+    }
+  ]
 }
