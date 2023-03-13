@@ -21,7 +21,6 @@ function App() {
     return <div>{error.message}</div>;
   }
 
-
   return (
     <div >
       {
