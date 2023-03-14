@@ -34,6 +34,7 @@ const counterSlice = createSlice({
     initialState,
     reducers: {
         // 갑자기 여기에 state는 어떻게 들어와있는 건지 모르겠다~.~
+        // >> 여기 있는 state는 원래 createSlice로 slice를 생성하면 자동으로 가지는 속성임.
         addNumber: (state, action) => {
             state.number = state.number + action.payload;
         },

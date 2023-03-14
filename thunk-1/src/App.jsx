@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // addNumber, minusNumber는 더이상 필요없어짐
-import { addNumber, minusNumber } from './redux/modules/counterSlice';
+// import { addNumber, minusNumber } from './redux/modules/counterSlice';
 import { __addNumber, __minusNumber } from './redux/modules/counterSlice';
 import './App.css';
 
